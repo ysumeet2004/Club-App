@@ -1,9 +1,21 @@
-#root {
+/* #root {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+} */
+ #root {
+  height: 100%;
+  width: 100%;
 }
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  padding: 20px; /* optional, can be 0 if you want edge-to-edge */
+}
+
 
 .logo {
   height: 6em;
@@ -39,4 +51,58 @@
 
 .read-the-docs {
   color: #888;
+}
+.myCustomStyle {
+  font-size: 1.2em;
+  text-decoration: underline;
+}
+/* Full app layout */
+.app-layout {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+}
+
+/* Main content wrapper */
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Default page padding */
+.page-content {
+  flex: 1;
+  padding: 20px;
+  overflow: auto;
+}
+
+/* Studio special layout (nested sidebar + editor) */
+.studio-layout {
+  display: flex;
+  flex: 1;
+  height: 100%;
+}
+
+.studio-sidebar {
+  width: 220px;
+  background: #1f2937;
+  color: white;
+  padding: 20px;
+}
+
+.studio-editor {
+  flex: 1;
+  padding: 0; /* no padding, full stretch */
+  display: flex;
+  flex-direction: column;
+}
+/* Ensure text wraps in EditorJS readonly mode */
+.ce-block,
+.ce-block__content,
+.ce-paragraph {
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-wrap: anywhere;
 }

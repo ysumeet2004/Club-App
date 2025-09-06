@@ -1,0 +1,54 @@
+/* Studio Layout */
+.studio-container {
+  display: flex;
+  height: 100vh;
+  background: #f9f9f9;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Sidebar */
+.studio-sidebar {
+  width: 240px;
+  background: #202124;
+  color: #fff;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.studio-logo {
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.studio-sidebar nav {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.studio-link {
+  color: #bbb;
+  text-decoration: none;
+  padding: 10px 12px;
+  border-radius: 8px;
+  transition: background 0.2s, color 0.2s;
+}
+
+.studio-link:hover {
+  background: #333;
+  color: #fff;
+}
+
+.studio-link.active {
+  background: #4285f4;
+  color: #fff;
+}
+
+/* Main Content */
+.studio-main {
+  flex: 1;
+  padding: 30px;
+  overflow-y: auto;
+}

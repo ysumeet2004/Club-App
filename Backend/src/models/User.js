@@ -6,7 +6,12 @@ const userSchema = new mongoose.Schema({
     phone: { type: String, required: true },
     branch: String,
     year: String,
-    role: { type: String, enum: ['student', 'club_admin', 'super_admin'], default: 'student' },
+    password: { type: String, required: true }, 
+    role: { 
+        type: String, 
+        enum: ['student', 'club_admin', 'super_admin'], 
+        default: 'student' 
+    },
     clubs: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Club' }],
     notificationPreferences: {
         email: { type: Boolean, default: true },

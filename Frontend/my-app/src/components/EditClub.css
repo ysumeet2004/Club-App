@@ -1,0 +1,123 @@
+.edit-club-container {
+  flex: 1;
+  padding: 2rem;
+  background: #f9fafc;
+  min-height: 100vh;
+}
+
+.edit-club-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  color: #222;
+}
+
+.edit-club-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-weight: 500;
+  color: #333;
+}
+
+.form-group input,
+.form-group textarea {
+  padding: 0.8rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: #007bff;
+}
+
+.file-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.8rem;
+  border: 1px dashed #aaa;
+  border-radius: 8px;
+  cursor: pointer;
+  background: #f8f9fa;
+}
+
+.file-input-wrapper input[type="file"] {
+  border: none;
+  background: none;
+}
+
+.upload-icon {
+  color: #007bff;
+  font-size: 1.2rem;
+}
+
+.edit-club-actions {
+  margin-top: 2rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.save-btn,
+.open-editor-btn {
+  display: flex;
+  align-items: center;
+  padding: 0.9rem 1.5rem;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.save-btn {
+  background: #28a745;
+  color: white;
+}
+
+.save-btn:hover {
+  background: #218838;
+}
+
+.open-editor-btn {
+  background: #007bff;
+  color: white;
+}
+
+.open-editor-btn:hover {
+  background: #0056b3;
+}
+
+.open-editor-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+.file-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.preview-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #007bff; /* or your theme color */
+  padding: 4px;
+  font-size: 1.2rem;
+}

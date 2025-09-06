@@ -1,35 +1,90 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+// App.jsx
+import React, { useEffect, useState } from "react";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import Sidebar from "./components/Sidebar";
+import Events from "./components/Events";
+import Profile from "./components/Profile";
+import Clubs from "./components/Clubs";
+import Signup from "./components/Signup";
+import Login from "./components/Login";
+import Studio from "./components/Studio";
+import TestEditor from "./components/testEditor";
+import "./App.css"; // make sure global layout styles are here
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [userRole, setUserRole] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchUserProfile() {
+      try {
+        const res = await fetch("http://localhost:5000/profile", {
+          method: "GET",
+          credentials: "include", // ✅ ensures cookie is sent with request
+        });
+
+        if (!res.ok) {
+          setUserRole(null);
+          return;
+        }
+
+        const data = await res.json();
+        setUserRole(data.role); // role from backend (student / club_admin / super_admin)
+      } catch (e) {
+        console.error("Error fetching user profile", e);
+        setUserRole(null);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchUserProfile();
+  }, []);
+
+  if (loading) return <div>Loading...</div>;
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <Router>
+      <Routes>
+        {/* Public Routes */}
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<Login />} />
+
+        {/* Protected Routes (only if logged in) */}
+        <Route
+          path="/*"
+          element={
+            userRole ? (
+              <div className="app-layout">
+                <Sidebar userRole={userRole} />
+                <div className="content">
+                  <Routes>
+                    {/* Default → Events */}
+                    <Route path="/" element={<Navigate to="/events" />} />
+                    <Route path="/profile" element={<Profile />} />
+                    <Route path="/clubs" element={<Clubs />} />
+                    <Route path="/events" element={<Events />} />
+                    <Route path="/myevents" element={<h1>My Events Page</h1>} />
+                    <Route path="/test-editor/:id" element={<TestEditor />} />
+
+                    {/* Studio → only for club_admin */}
+                    {userRole === "club_admin" && (
+                      <Route path="/studio/*" element={<Studio />} />
+                    )}
+
+                    {/* Catch-all → go home */}
+                    <Route path="*" element={<Navigate to="/" />} />
+                  </Routes>
+                </div>
+              </div>
+            ) : (
+              <Navigate to="/login" />
+            )
+          }
+        />
+      </Routes>
+    </Router>
+  );
 }
 
-export default App
+export default App;
