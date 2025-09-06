@@ -31,7 +31,7 @@ app.post('/Signup', signUpHandler);
 app.post('/Login', loginHandler);
 app.get('/profile', authMiddleware, getProfileHandler);
 app.use("/clubs", router);
-
+app.get('/allClub',fetchAllClubs);
 // Start server LAST
 app.listen(PORT, () => {
   console.log(`Server connected to port ${PORT}`);
