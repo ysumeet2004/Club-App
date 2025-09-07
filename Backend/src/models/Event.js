@@ -13,7 +13,9 @@ const eventSchema = new mongoose.Schema({
     teamSize: {
         min: Number,
         max: Number
-    }
+    },
+    teams: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Team' }],
+    soloParticipants: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
 }, { timestamps: true });
 
 module.exports = mongoose.model('Event', eventSchema);

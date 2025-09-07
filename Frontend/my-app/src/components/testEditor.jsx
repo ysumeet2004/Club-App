@@ -157,7 +157,7 @@ function TestEditorLoad() {
 
   return (
     <div className="editor-wrapper">
-      <h2 className="editor-title">Test Editor Load</h2>
+      <h2 className="editor-title"></h2>
       <div id="editorjs" className="editor-area"></div>
     </div>
   );

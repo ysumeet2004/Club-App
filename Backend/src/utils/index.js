@@ -10,7 +10,7 @@ const loginHandler = require('../controllers/Login');
 const authMiddleware = require('../middlewares/Auth');
 const getProfileHandler = require('../controllers/Profile');
 const router = require("../routes/clubRoutes");
-
+const fetchAllClubs = require('../controllers/allClub');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
