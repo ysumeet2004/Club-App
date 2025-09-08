@@ -11,6 +11,9 @@ const authMiddleware = require('../middlewares/Auth');
 const getProfileHandler = require('../controllers/Profile');
 const router = require("../routes/clubRoutes");
 const fetchAllClubs = require('../controllers/allClub');
+const Event = require('../routes/eventQuery');
+const router__ = require('../routes/eventManage');
+const formRouter = require('../routes/Forms');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
@@ -32,6 +35,9 @@ app.post('/Login', loginHandler);
 app.get('/profile', authMiddleware, getProfileHandler);
 app.use("/clubs", router);
 app.get('/allClub',fetchAllClubs);
+app.use('/events', Event);
+app.use('/event/manage',router__);
+app.use('/forms',formRouter);
 // Start server LAST
 app.listen(PORT, () => {
   console.log(`Server connected to port ${PORT}`);

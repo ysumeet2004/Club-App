@@ -5,6 +5,7 @@ const roundSchema = new mongoose.Schema({
     name: String,
     description: String,
     start_time: Date,
+    roundNumber: { type: Number, required: true },
     status: { type: String, enum: ['upcoming', 'active', 'completed'], default: 'upcoming' }
 }, { timestamps: true });
 
