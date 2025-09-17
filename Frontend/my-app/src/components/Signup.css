@@ -1,0 +1,153 @@
+.signup-root {
+  display: flex;
+  justify-content: center;   /* centers horizontally */
+  align-items: center;       /* centers vertically */
+  min-height: 100vh;         /* full page height */
+  background: #f9fbfd;       /* light background */
+}
+
+.signup-box {
+  display: flex;
+  flex-direction: row;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  max-width: 900px;   /* limit width */
+  width: 100%;
+}
+
+
+.signup-form-section {
+  flex: 1;
+  padding: 40px;
+}
+
+.signup-form-section h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.signup-input {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 6px;
+  background: #fafafa;
+}
+
+.signup-input svg {
+  margin-right: 10px;
+  color: #555;
+}
+
+.signup-input input,
+.signup-input select,
+.signup-input textarea {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 14px;
+}
+
+.signup-input input:focus,
+.signup-input select:focus,
+.signup-input textarea:focus {
+  outline: none;
+}
+
+.signup-input textarea {
+  min-height: 36px;
+  resize: vertical;
+}
+
+.signup-checkbox-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+.signup-checkbox-row input {
+  margin-right: 10px;
+}
+
+.signup-btn {
+  width: 100%;
+  padding: 12px;
+  background: #4a90e2;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.signup-btn:hover {
+  background: #357ab8;
+}
+
+.signup-btn:disabled {
+  background: #aaa;
+  cursor: not-allowed;
+}
+
+.signup-image-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  background: #f9fbfd;
+}
+
+.signup-illustration {
+  max-width: 100%;
+  border-radius: 8px;
+}
+
+.already-member {
+  margin-top: 15px;
+}
+
+.already-member a {
+  font-size: 14px;
+  text-decoration: underline;
+  color: #333;
+  cursor: pointer;
+}
+
+.already-member a:hover {
+  color: #4a90e2;
+}
+.signup-input select {
+  color: #333;   /* normal text color */
+  background: transparent;
+}
+
+.signup-input select option {
+  color: #333;   /* dropdown option text color */
+  background: #fff; /* white background so options are visible */
+}
+.signup-input input,
+.signup-input select,
+.signup-input textarea {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 14px;
+  color: #333;   /* <-- FIX: make text dark */
+}
+
+.signup-input input::placeholder,
+.signup-input select::placeholder,
+.signup-input textarea::placeholder {
+  color: #888;   /* softer placeholder */
+}

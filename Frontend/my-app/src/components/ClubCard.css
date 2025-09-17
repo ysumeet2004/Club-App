@@ -1,0 +1,120 @@
+.clubs-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 40px;
+  padding: 40px;
+  background: linear-gradient(135deg, #f5f7fa, #eef1f5);
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+/* Club Card */
+.club-card {
+  background-color: #fff;
+  border-radius: 16px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+  overflow: hidden;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  height: 460px; /* fixed uniform height */
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.club-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.12);
+}
+
+.club-card-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 22px;
+  border-bottom: 1px solid #f0f2f5;
+}
+
+.club-logo {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #4f46e5; /* indigo accent */
+  transition: transform 0.3s ease;
+}
+
+.club-card:hover .club-logo {
+  transform: scale(1.1);
+}
+
+.club-name {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0;
+  letter-spacing: 0.5px;
+}
+
+/* Cover image with fixed aspect ratio */
+.club-card-cover {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9; /* keeps cinematic look */
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.club-cover-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.35s ease;
+}
+
+.club-card:hover .club-cover-image {
+  transform: scale(1.05);
+}
+
+/* Footer */
+.club-card-footer {
+  padding: 20px;
+  text-align: center;
+  background-color: #fafafa;
+  border-top: 1px solid #f1f1f1;
+  margin-top: auto;
+}
+
+/* ✅ Fix button styling */
+.view-details {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #4f46e5;
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border-radius: 8px;
+  border: none;          /* remove default border */
+  outline: none;         /* remove focus outline */
+  cursor: pointer;       /* pointer on hover */
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.view-details:hover {
+  background-color: #4338ca;
+  transform: translateY(-2px);
+}
+
+/* States */
+.loading,
+.error,
+.no-clubs {
+  text-align: center;
+  font-size: 1.2rem;
+  padding: 60px;
+  color: #4b5563;
+}
+
+.error {
+  color: #dc2626;
+}

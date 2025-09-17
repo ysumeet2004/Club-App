@@ -1,0 +1,24 @@
+.editor-wrapper {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  height: 100%;
+  padding: 20px;
+  background: #fafafa;
+  overflow: auto;
+}
+
+.editor-title {
+  margin-bottom: 15px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.editor-area {
+  flex: 1;
+  min-height: 80vh;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 20px;
+  background: white;
+}

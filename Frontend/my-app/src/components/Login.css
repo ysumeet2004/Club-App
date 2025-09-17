@@ -1,0 +1,128 @@
+.login-root {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #f7f9fc;
+  font-family: 'Poppins', sans-serif;
+}
+
+.login-box {
+  display: flex;
+  width: 900px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  overflow: hidden;
+}
+
+/* Image section LEFT */
+.login-image-section {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f9fbfd;
+  padding: 40px;
+}
+
+.login-illustration {
+  max-width: 100%;
+  border-radius: 8px;
+}
+
+/* Form section RIGHT */
+.login-form-section {
+  flex: 1;
+  padding: 40px;
+}
+
+.login-form-section h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.login-input {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 6px;
+  background: #fafafa;
+}
+
+.login-input svg {
+  margin-right: 10px;
+  color: #555;
+}
+
+.login-input input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 14px;
+  color: #333;   /* text color fix */
+}
+
+.login-input input::placeholder {
+  color: #888;
+}
+
+.login-checkbox-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+.login-checkbox-row input {
+  margin-right: 10px;
+}
+
+.login-btn {
+  width: 100%;
+  padding: 12px;
+  background: #4a90e2;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.login-btn:hover {
+  background: #357ab8;
+}
+
+.forgot-password {
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+.forgot-password a {
+  color: #4a90e2;
+  text-decoration: none;
+}
+
+.forgot-password a:hover {
+  text-decoration: underline;
+}
+
+.new-member {
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.new-member a {
+  color: #4a90e2;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.new-member a:hover {
+  text-decoration: underline;
+}
