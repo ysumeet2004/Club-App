@@ -13,7 +13,9 @@ import ClubCard from './components/ClubCard';
 import ManageEvent from './components/ManageEvent';
 import EventDetailPage from "./components/EventDetailPage";
 import FormEditor from "./components/FormEditor";
-import FormEditorWrapper from "./components/FormEditorWrapper";
+import FormManager from "./components/FormEditorWrapper";
+import MyEvents from "./components/MyEvents";
+import UserChat from "./components/userChat";
 import "./App.css"; // make sure global layout styles are here
 
 function App() {
@@ -69,11 +71,12 @@ function App() {
                     <Route path="/profile" element={<Profile />} />
                     <Route path="/clubs" element={<ClubCard />} />
                     <Route path="/events" element={<Events />} />
-                    <Route path="/myevents" element={<h1>My Events Page</h1>} />
+                    <Route path="/myevents" element={<MyEvents/>} />
                     <Route path="/test-editor/:id" element={<TestEditor />} />
                     <Route path="/studio/manage-events" element={<ManageEvent />} />
                     <Route path="/event/manage/:id" element={<EventDetailPage />} />
-                    <Route path="form-edit" element={<FormEditorWrapper />} />
+                    <Route path="form-edit" element={<FormManager />} />
+                    <Route path="userchat/:eventId" element={<UserChat />} />
                     {/* Studio → only for club_admin */}
                     {userRole === "club_admin" && (
                       <Route path="/studio/*" element={<Studio />} />

@@ -15,6 +15,8 @@ const eventSchema = new mongoose.Schema({
         max: Number
     },
     teams: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Team' }],
+    fee:{type: Number,default:0},
+    pricePool:{type: Number,default:0},
     soloParticipants: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
 }, { timestamps: true });
 

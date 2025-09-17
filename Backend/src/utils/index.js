@@ -14,6 +14,8 @@ const fetchAllClubs = require('../controllers/allClub');
 const Event = require('../routes/eventQuery');
 const router__ = require('../routes/eventManage');
 const formRouter = require('../routes/Forms');
+const userRoutes = require('../routes/users');
+const announcementRouter = require('../routes/Announcement');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
@@ -38,6 +40,8 @@ app.get('/allClub',fetchAllClubs);
 app.use('/events', Event);
 app.use('/event/manage',router__);
 app.use('/forms',formRouter);
+app.use('/users', userRoutes);
+app.use('/announcements',announcementRouter);
 // Start server LAST
 app.listen(PORT, () => {
   console.log(`Server connected to port ${PORT}`);

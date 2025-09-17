@@ -242,7 +242,9 @@ router_.post('/', async (req, res) => {
       maxParticipants,
       teamSize,
       visibility,
-      rounds // Expect rounds array here
+      rounds, // Expect rounds array here
+      fee = 0,
+      pricePool = 0
     } = req.body;
 
     if (!club) return res.status(400).json({ error: "Club ID is required" });
@@ -363,6 +365,24 @@ router_.post('/:id/register-team', async (req, res) => {
   } catch (error) {
     console.error("Error registering team:", error);
     res.status(500).json({ error: "Failed to register team" });
+  }
+});
+// GET /events - fetch all events with populated clubs, teams (and members), soloParticipants
+router_.get("/get/all", async (req, res) => {
+  try {
+    const events = await Event.find()
+      .populate("club") // populate club details like name, logo
+      .populate({
+        path: "teams",
+        populate: { path: "members" } // populate team members
+      })
+      .populate("soloParticipants") // populate solo participant user details
+      .exec();
+
+    res.json(events);
+  } catch (error) {
+    console.error("Error fetching events:", error);
+    res.status(500).json({ error: "Internal server error" });
   }
 });
 

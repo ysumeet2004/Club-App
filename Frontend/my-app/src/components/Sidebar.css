@@ -1,48 +1,119 @@
+/* Sidebar Base */
 .sidebar {
-  width: 220px;
-  background: #111827;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 240px;
+  background: linear-gradient(180deg, #1f2937, #111827);
   color: white;
   display: flex;
   flex-direction: column;
-  padding: 20px 10px;
-  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+  padding: 20px 15px;
+  box-shadow: 2px 0 15px rgba(0, 0, 0, 0.25);
+  transition: all 0.3s ease;
+  z-index: 1000;
 }
 
+/* Collapsed */
+.sidebar.collapsed {
+  width: 70px;
+  padding: 20px 10px;
+}
+.sidebar.collapsed .sidebar-logo {
+  display: none;
+}
+.sidebar.collapsed .nav-btn span {
+  display: none;
+}
+
+/* Logo */
 .sidebar-logo {
   text-align: center;
   margin-bottom: 30px;
-  font-size: 22px;
+  font-size: 24px;
   font-weight: bold;
-  color: #60a5fa;
+  background: linear-gradient(45deg, #60a5fa, #3b82f6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
+/* Nav */
 .sidebar-nav {
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
 
+/* Nav Buttons */
 .nav-btn {
   text-decoration: none;
   color: #e5e7eb;
   font-size: 16px;
-  padding: 10px 15px;
+  padding: 10px 14px;
   border-radius: 8px;
-  transition: 0.2s;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
 .nav-btn:hover {
-  background: #1f2937;
+  background: rgba(255, 255, 255, 0.1);
   color: #60a5fa;
+  transform: translateX(4px);
 }
 
+.nav-btn.active {
+  background: linear-gradient(90deg, #2563eb, #60a5fa);
+  color: white;
+  font-weight: 600;
+  box-shadow: 0 0 10px rgba(96, 165, 250, 0.5);
+}
+
+/* Icons */
+.nav-icon {
+  font-size: 18px;
+}
+
+/* Logout */
 .logout {
   margin-top: auto;
   background: #b91c1c;
   color: white !important;
   text-align: center;
+  justify-content: center;
 }
-
 .logout:hover {
   background: #dc2626;
+  transform: translateX(0);
+}
+
+/* Toggle Button (Mobile) */
+.sidebar-toggle {
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  z-index: 1100;
+  background: #1f2937;
+  color: white;
+  border: none;
+  font-size: 20px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: none;
+}
+
+/* Show toggle button on small screens */
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-100%);
+  }
+  .sidebar.open {
+    transform: translateX(0);
+  }
+  .sidebar-toggle {
+    display: block;
+  }
 }

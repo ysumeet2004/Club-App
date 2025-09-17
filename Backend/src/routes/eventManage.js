@@ -2,7 +2,8 @@ const express = require('express');
 const router__ = express.Router();
 const mongoose = require('mongoose');
 const excelJS = require('exceljs');
-
+const multer = require("multer");
+const path = require("path");
 const Event = require('../models/Event');
 const Round = require('../models/Round');
 const RoundParticipant = require('../models/RoundParticipant');
@@ -21,7 +22,7 @@ router__.get('/:id', async (req, res) => {
   }
 });
 
-// GET /events/manage/:id/rounds
+// GET /event/manage/:id/rounds
 router__.get('/:id/rounds', async (req, res) => {
   try {
     const rounds = await Round.find({ event: req.params.id });
@@ -48,10 +49,42 @@ router__.put('/:id', async (req, res) => {
   }
 });
 
+// POST /event/manage/:eventId/add-solo-participant
+router__.post('/:eventId/add-solo-participant', async (req, res) => {
+  const { eventId } = req.params;
+  const { userId } = req.body;
+
+  if (!mongoose.Types.ObjectId.isValid(eventId) || !mongoose.Types.ObjectId.isValid(userId)) {
+    return res.status(400).json({ error: 'Invalid eventId or userId' });
+  }
+
+  try {
+    const event = await Event.findById(eventId);
+    if (!event) return res.status(404).json({ error: 'Event not found' });
+    console.log('event found');
+
+    // Check if userId is already in soloParticipants
+    const isAlreadyParticipant = event.soloParticipants.some(id => id.equals(userId));
+    //console.log(userId);
+    //console.log('step2')
+    if (!isAlreadyParticipant) {
+      //console.log('step3');
+      event.soloParticipants.push(userId);
+      await event.save();
+      //console.log('step4');
+    }
+
+    res.json({ message: 'User added as solo participant', soloParticipants: event.soloParticipants });
+  } catch (error) {
+    console.error('Error adding solo participant:', error);
+    res.status(500).json({ error: 'Failed to add solo participant' });
+  }
+});
+
 // GET /rounds/:roundId/participants
 router__.get('/rounds/:roundId/participants', async (req, res) => {
   try {
-    console.log('pahucha');
+    //console.log('pahucha');
     const participants = await RoundParticipant.find({ round: req.params.roundId })
       .populate('user')
       .populate({ path: 'team', populate: { path: 'members' } });
@@ -60,6 +93,41 @@ router__.get('/rounds/:roundId/participants', async (req, res) => {
   } catch (error) {
     console.error("Error fetching participants:", error);
     res.status(500).json({ error: "Failed to fetch participants" });
+  }
+});
+
+// POST /rounds/:roundId/participants
+router__.post('/rounds/:roundId/participants', async (req, res) => {
+  try {
+    const roundId = req.params.roundId;
+    const { userData, userId, teamId, status = 'registered', progress = 'in_progress' } = req.body;
+
+    if (!roundId) {
+      return res.status(400).json({ error: "Round ID is required" });
+    }
+
+    // You can extend validation here to check for userId or teamId presence as needed
+    if (!userData && !userId && !teamId) {
+      return res.status(400).json({ error: "Participant data is required" });
+    }
+
+    // Create new RoundParticipant
+    const newParticipant = new RoundParticipant({
+      round: roundId,
+      event: req.body.eventId,
+      user: userId || null,
+      team: teamId || null,
+      status,
+      progress,
+      userData, // store raw user data optionally
+    });
+
+    await newParticipant.save();
+
+    res.status(201).json({ message: "Participant added to round", participant: newParticipant });
+  } catch (error) {
+    console.error("Error adding participant:", error);
+    res.status(500).json({ error: "Failed to add participant" });
   }
 });
 
@@ -78,6 +146,7 @@ router__.post('/rounds/:roundId/move', async (req, res) => {
     // Create new participant entry for next round
     const newParticipant = new RoundParticipant({
       round: nextRoundId,
+      event: participant.event, 
       user: participant.user,
       team: participant.team,
       status: 'registered',
@@ -138,4 +207,41 @@ router__.get('/:id/export', async (req, res) => {
   }
 });
 
+
+// Configure Multer storage
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null,path.join(__dirname, '../../uploads'));
+  },
+  filename: (req, file, cb) => {
+    // Unique filename: timestamp + original name
+    cb(null, Date.now() + "-" + file.originalname);
+  },
+});
+
+const upload = multer({ storage });
+
+// Image upload route
+router__.post("/:id/upload-image", upload.single("coverImage"), async (req, res) => {
+  try {
+    if (!req.file) return res.status(400).json({ error: "No file uploaded" });
+
+    const eventId = req.params.id;
+    const imagePath = `/uploads/${req.file.filename}`; // Public URL path
+
+    // Update event coverImage field with the relative path
+    const updatedEvent = await Event.findByIdAndUpdate(
+      eventId,
+      { coverImage: imagePath },
+      { new: true }
+    );
+
+    if (!updatedEvent) return res.status(404).json({ error: "Event not found" });
+
+    res.json(updatedEvent);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to upload image" });
+  }
+});
 module.exports = router__;

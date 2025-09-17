@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo, useState } from "react";
-
 import './FormEditor.css'
 import axios from "axios";
 
@@ -31,12 +30,13 @@ export default function FormEditor({ eventId }) {
   const [status, setStatus] = useState("DRAFT");
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState("");
-
   const [formName, setFormName] = useState("My Awesome Form");
   const [fields, setFields] = useState([emptyField()]);
-
   const [showEmbedPreview, setShowEmbedPreview] = useState(false);
   const [previewKey, setPreviewKey] = useState(0);
+
+
+ 
 
   useEffect(() => {
     if (!showEmbedPreview) return;
@@ -704,8 +704,8 @@ export default function FormEditor({ eventId }) {
               </div>
               <div>
                 Share form link:{" "}
-                <a href={`https://tally.so/forms/${formId}`} target="_blank" rel="noreferrer">
-                  https://tally.so/forms/{formId}
+                <a href={`https://tally.so/r/${formId}`} target="_blank" rel="noreferrer">
+                  https://tally.so/r/{formId}
                 </a>
               </div>
             </div>
@@ -714,6 +714,15 @@ export default function FormEditor({ eventId }) {
       </div>
     </div>
   );
+
+//  return (
+//     <div>
+//       {/* keep the entire UI you already had for FormEditor */}
+//       {/* everything inside your big return (title, inputs, buttons, preview) stays intact */}
+//       <h2>Tally Form Editor & Preview</h2>
+//       {/* ... all existing editor UI ... */}
+//     </div>
+//   );
 }
 
 const inputStyle = {

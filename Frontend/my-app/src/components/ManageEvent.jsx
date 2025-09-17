@@ -66,6 +66,8 @@ function CreateEventForm({ onClose, onSave }) {
   const [endDate, setEndDate] = useState("");
   const [visibility, setVisibility] = useState("public");
   const [rounds, setRounds] = useState([]);
+  const [fee, setFee] = useState(0);
+  const [pricePool, setPricePool] = useState(0);
 
   const handleAddRound = () => {
     setRounds([...rounds, { name: "", date: "", description: "" }]);
@@ -186,6 +188,27 @@ function CreateEventForm({ onClose, onSave }) {
             />
             <label htmlFor="private" className="form-check-label">Private</label>
           </div>
+        </div>
+         <div className="mb-3">
+          <label className="form-label">Fee (₹)</label>
+          <input
+            type="number"
+            className="form-control"
+            value={fee}
+            min={0}
+            onChange={(e) => setFee(e.target.value)}
+          />
+        </div>
+
+        <div className="mb-3">
+          <label className="form-label">Price Pool (₹)</label>
+          <input
+            type="number"
+            className="form-control"
+            value={pricePool}
+            min={0}
+            onChange={(e) => setPricePool(e.target.value)}
+          />
         </div>
 
         <div className="mb-3">
