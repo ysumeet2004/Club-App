@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom"; // For navigation
 import "./ManageEvent.css"; // Import styles
+const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
 
 // Event Card Component
 function EventCard({ event, onClick }) {
@@ -280,7 +282,7 @@ export default function ManageEvent() {
   useEffect(() => {
     async function fetchProfile() {
       try {
-        const res = await fetch("http://localhost:5000/profile", { credentials: "include" });
+        const res = await fetch(`${API_BASE}/profile`, { credentials: "include" });
         if (!res.ok) throw new Error("Failed to fetch profile");
         const profile = await res.json();
         if (profile.clubs && profile.clubs.length > 0) {
@@ -300,7 +302,7 @@ export default function ManageEvent() {
       try {
         setLoading(true);
         setError(null);
-        const response = await fetch(`http://localhost:5000/events?club=${clubId}&sort=-createdAt`);
+        const response = await fetch(`${API_BASE}/events?club=${clubId}&sort=-createdAt`);
         if (!response.ok) throw new Error("Failed to fetch events");
         const data = await response.json();
 
@@ -328,7 +330,7 @@ export default function ManageEvent() {
     if (!clubId) return alert("Club ID not available, cannot create event.");
     try {
       // Create Event
-      const response = await fetch("http://localhost:5000/events", {
+      const response = await fetch(`${API_BASE}/events`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...eventData, club: clubId }),
@@ -340,7 +342,7 @@ export default function ManageEvent() {
       if (eventData.rounds && eventData.rounds.length > 0) {
         for (const round of eventData.rounds) {
           // Wait each round creation
-          await fetch(`http://localhost:5000/events/${newEvent._id}/rounds`, {
+          await fetch(`${API_BASE}/events/${newEvent._id}/rounds`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({

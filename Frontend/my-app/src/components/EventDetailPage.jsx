@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-axios.defaults.baseURL = "http://localhost:5000";
+axios.defaults.baseURL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 function EventDetailPage() {
   const navigate = useNavigate();
@@ -116,7 +116,7 @@ function EventDetailPage() {
   };
 
   const downloadExcel = () => {
-    window.location.href = `http://localhost:5000/event/manage/${id}/export`;
+    window.location.href = `${import.meta.env.VITE_API_URL || "http://localhost:5000"}/event/manage/${id}/export`;
   };
 
   // ---------------- Announcements ----------------
@@ -364,7 +364,7 @@ function EventDetailPage() {
                 />
                 {event.coverImage && (
                   <img
-                    src={`http://localhost:5000${event.coverImage}`}
+                    src={`${import.meta.env.VITE_API_URL || "http://localhost:5000"}${event.coverImage}`}
                     alt="Cover"
                     className="mt-2"
                     style={{ maxWidth: "200px", borderRadius: "8px" }}

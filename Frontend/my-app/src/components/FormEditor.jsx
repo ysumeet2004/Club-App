@@ -22,7 +22,7 @@ const emptyField = () => ({
   options: ["Option 1", "Option 2"],
 });
 
-const BACKEND_BASE = "http://localhost:5000";
+const BACKEND_BASE = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 export default function FormEditor({ eventId }) {
   const [apiKey, setApiKey] = useState("");

@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import "./Profile.css";
+const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 function Profile() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:5000/profile", {
+    fetch(`${API_BASE}/profile`, {
       method: "GET",
       credentials: "include", // 👈 send cookies
     })

@@ -18,7 +18,7 @@
 //   useEffect(() => {
 //     async function fetchProfileAndDetails() {
 //       try {
-//         const profileRes = await fetch("http://localhost:5000/profile", {
+//         const profileRes = await fetch(`${API_BASE}/profile`, {
           
 //           credentials: "include",
 //         });
@@ -28,7 +28,7 @@
 //         const id = profileData.clubs[0];
 //         setClubId(id);
 
-//         const clubRes = await fetch(`http://localhost:5000/clubs/${id}`);
+//         const clubRes = await fetch(`${API_BASE}/clubs/${id}`);
 //         if (!clubRes.ok) throw new Error("Failed to fetch club details");
 //         const clubData = await clubRes.json();
 
@@ -46,7 +46,7 @@
 
 //   const handleUpdateName = async () => {
 //     if (!clubId) return;
-//     await fetch(`http://localhost:5000/clubs/update/${clubId}`, {
+//     await fetch(`${API_BASE}/clubs/update/${clubId}`, {
 //       method: "PUT",
 //       headers: { "Content-Type": "application/json" },
 //       body: JSON.stringify({ name: clubName }),
@@ -58,7 +58,7 @@
 
 //   const handleUpdateDescription = async () => {
 //     if (!clubId) return;
-//     await fetch(`http://localhost:5000/clubs/update/${clubId}`, {
+//     await fetch(`${API_BASE}/clubs/update/${clubId}`, {
 //       method: "PUT",
 //       headers: { "Content-Type": "application/json" },
 //       body: JSON.stringify({ description }),
@@ -72,7 +72,7 @@
 //     if (!logoFile || !clubId) return;
 //     const formData = new FormData();
 //     formData.append("image", logoFile);
-//     await fetch(`http://localhost:5000/clubs/${clubId}/logo`, {
+//     await fetch(`${API_BASE}/clubs/${clubId}/logo`, {
 //       method: "PUT",
 //       body: formData,
 //     });
@@ -85,7 +85,7 @@
 //     if (!coverFile || !clubId) return;
 //     const formData = new FormData();
 //     formData.append("image", coverFile);
-//     await fetch(`http://localhost:5000/clubs/${clubId}/cover`, {
+//     await fetch(`${API_BASE}/clubs/${clubId}/cover`, {
 //       method: "PUT",
 //       body: formData,
 //     });
@@ -191,6 +191,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaEye, FaSave, FaUpload } from "react-icons/fa";
 import "./EditClub.css";
+const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 function EditClub() {
   const navigate = useNavigate();
@@ -207,7 +208,7 @@ function EditClub() {
   useEffect(() => {
     async function fetchProfileAndDetails() {
       try {
-        const profileRes = await fetch("http://localhost:5000/profile", {
+        const profileRes = await fetch(`${API_BASE}/profile`, {
           credentials: "include",
         });
 
@@ -216,14 +217,14 @@ function EditClub() {
         const id = profileData.clubs[0];
         setClubId(id);
 
-        const clubRes = await fetch(`http://localhost:5000/clubs/${id}`);
+        const clubRes = await fetch(`${API_BASE}/clubs/${id}`);
         if (!clubRes.ok) throw new Error("Failed to fetch club details");
         const clubData = await clubRes.json();
 
         setOriginalName(clubData.name || "");
         setOriginalDescription(clubData.description || "");
-        setLogoUrl(clubData.logo ? `http://localhost:5000${clubData.logo}` : "");
-        setCoverUrl(clubData.coverImage ? `http://localhost:5000${clubData.coverImage}` : "");
+        setLogoUrl(clubData.logo ? `${API_BASE}${clubData.logo}` : "");
+        setCoverUrl(clubData.coverImage ? `${API_BASE}${clubData.coverImage}` : "");
       } catch (err) {
         console.error("Error fetching profile or club details:", err);
       }
@@ -234,7 +235,7 @@ function EditClub() {
 
   const handleUpdateName = async () => {
     if (!clubId) return;
-    await fetch(`http://localhost:5000/clubs/update/${clubId}`, {
+    await fetch(`${API_BASE}/clubs/update/${clubId}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name: clubName }),
@@ -246,7 +247,7 @@ function EditClub() {
 
   const handleUpdateDescription = async () => {
     if (!clubId) return;
-    await fetch(`http://localhost:5000/clubs/update/${clubId}`, {
+    await fetch(`${API_BASE}/clubs/update/${clubId}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ description }),
@@ -260,7 +261,7 @@ function EditClub() {
     if (!logoFile || !clubId) return;
     const formData = new FormData();
     formData.append("image", logoFile);
-    await fetch(`http://localhost:5000/clubs/${clubId}/logo`, {
+    await fetch(`${API_BASE}/clubs/${clubId}/logo`, {
       method: "PUT",
       body: formData,
     });
@@ -273,7 +274,7 @@ function EditClub() {
     if (!coverFile || !clubId) return;
     const formData = new FormData();
     formData.append("image", coverFile);
-    await fetch(`http://localhost:5000/clubs/${clubId}/cover`, {
+    await fetch(`${API_BASE}/clubs/${clubId}/cover`, {
       method: "PUT",
       body: formData,
     });

@@ -2,7 +2,7 @@
 // import axios from "axios";
 // import "./MyEvents.css";
 
-// const BACKEND_BASE = "http://localhost:5000";
+// const BACKEND_BASE = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 // export default function MyEvents() {
 //   const [myEvents, setMyEvents] = useState([]);
@@ -164,7 +164,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./MyEvents.css";
 
-const BACKEND_BASE = "http://localhost:5000";
+const BACKEND_BASE = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 export default function MyEvents() {
   const [myEvents, setMyEvents] = useState([]);

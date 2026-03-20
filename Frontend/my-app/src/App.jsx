@@ -17,6 +17,7 @@ import FormManager from "./components/FormEditorWrapper";
 import MyEvents from "./components/MyEvents";
 import UserChat from "./components/userChat";
 import "./App.css"; // make sure global layout styles are here
+const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 function App() {
   const [userRole, setUserRole] = useState(null);
@@ -25,7 +26,7 @@ function App() {
   useEffect(() => {
     async function fetchUserProfile() {
       try {
-        const res = await fetch("http://localhost:5000/profile", {
+        const res = await fetch(`${API_BASE}/profile`, {
           method: "GET",
           credentials: "include", // ✅ ensures cookie is sent with request
         });

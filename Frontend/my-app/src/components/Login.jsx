@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { FaEnvelope, FaLock } from 'react-icons/fa';
 import './Login.css';
 import loginIllustration from '../assets/6426047.jpg';
+const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 function Login() {
   const [formData, setFormData] = useState({
@@ -22,7 +23,7 @@ function Login() {
     e.preventDefault();
 
     try {
-      const res = await fetch("http://localhost:5000/Login", {
+      const res = await fetch(`${API_BASE}/Login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
