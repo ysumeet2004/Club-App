@@ -28,19 +28,30 @@ router.get("/:id/customize", getClubPage);
 // const upload = multer({ storage });
 
 
+const ALLOWED_MIME_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif"];
+const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 MB
+
 const storage = multer.diskStorage({
   destination: path.join(__dirname, '../../uploads'),
   filename: (req, file, cb) => {
     cb(null, Date.now() + path.extname(file.originalname));
   },
 });
-const upload = multer({ storage });
+const upload = multer({
+  storage,
+  limits: { fileSize: MAX_FILE_SIZE },
+  fileFilter: (req, file, cb) => {
+    if (!ALLOWED_MIME_TYPES.includes(file.mimetype)) {
+      return cb(new Error("Invalid file type. Only JPEG, PNG, WebP, and GIF images are allowed."));
+    }
+    cb(null, true);
+  },
+});
 router.put("/update/:id", async (req, res) => {
   try {
     const updates = {};
     if (req.body.name) updates.name = req.body.name;
     if (req.body.description) updates.description = req.body.description;
-    console.log('uo')
     const updatedClub = await Club.findByIdAndUpdate(req.params.id, { $set: updates }, { new: true });
     if (!updatedClub) return res.status(404).json({ error: "Club not found" });
 

@@ -36,7 +36,7 @@
 //   useEffect(() => {
 //     async function fetchData() {
 //       try {
-//         const res = await fetch(`http://localhost:5000/clubs/${clubId}/customize`, {
+//         const res = await fetch(`${API_BASE}/clubs/${clubId}/customize`, {
 //           method: "GET",
 //           credentials: "include",
 //         });
@@ -183,7 +183,7 @@
 //       const output = await editorRef.current.save();
 //       console.log("Editor Output:", output);
 
-//       const res = await fetch(`http://localhost:5000/clubs/${clubId}/customize`, {
+//       const res = await fetch(`${API_BASE}/clubs/${clubId}/customize`, {
 //         method: "PUT",
 //         headers: { "Content-Type": "application/json" },
 //         credentials: "include",
@@ -246,6 +246,7 @@ import * as EditorJSInlineStyle from "editorjs-style";
 import Paragraph from "@editorjs/paragraph";
 
 import "./ClubEditor.css";
+const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 function ClubEditor() {
   const { id: clubId } = useParams();
@@ -256,7 +257,7 @@ function ClubEditor() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const res = await fetch(`http://localhost:5000/clubs/${clubId}/customize`, {
+        const res = await fetch(`${API_BASE}/clubs/${clubId}/customize`, {
           method: "GET",
           credentials: "include",
         });
@@ -377,7 +378,7 @@ function ClubEditor() {
       const output = await editorRef.current.save();
       console.log("Editor Output:", output);
 
-      const res = await fetch(`http://localhost:5000/clubs/${clubId}/customize`, {
+      const res = await fetch(`${API_BASE}/clubs/${clubId}/customize`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         credentials: "include",

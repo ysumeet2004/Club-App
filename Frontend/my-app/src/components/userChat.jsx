@@ -4,7 +4,7 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { Megaphone, AlertCircle, Calendar } from "lucide-react";
 
-const API_BASE = "http://localhost:5000/announcements";
+const API_BASE = `${import.meta.env.VITE_API_URL || "http://localhost:5000"}/announcements`;
 
 export default function UserChat() {
   const { eventId } = useParams();

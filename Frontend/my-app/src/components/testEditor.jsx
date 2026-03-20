@@ -24,6 +24,7 @@ import Underline from "@editorjs/underline";
 import ColorPlugin from "editorjs-text-color-plugin";
 import * as EditorJSInlineStyle from "editorjs-style";
 import Paragraph from "@editorjs/paragraph";
+const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 function TestEditorLoad() {
   const { id: clubId } = useParams();
@@ -35,7 +36,7 @@ function TestEditorLoad() {
     async function fetchData() {
       try {
         const res = await fetch(
-          `http://localhost:5000/clubs/${clubId}/customize`,
+          `${API_BASE}/clubs/${clubId}/customize`,
           {
             method: "GET",
             credentials: "include",

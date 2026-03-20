@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./ClubCard.css";
+const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 function ClubCard({ clubName, logoUrl, coverUrl, onClick }) {
   return (
@@ -40,7 +41,7 @@ export default function ClubsPage() {
         setLoading(true);
         setError(null);
 
-        const res = await fetch("http://localhost:5000/allClub", {
+        const res = await fetch(`${API_BASE}/allClub`, {
           method: "GET",
           credentials: "include",
         });
@@ -55,13 +56,13 @@ export default function ClubsPage() {
           const logoUrl = club.logo
             ? club.logo.startsWith("http")
               ? club.logo
-              : `http://localhost:5000${club.logo}`
+              : `${API_BASE}${club.logo}`
             : "";
 
           const coverImageUrl = club.coverImage
             ? club.coverImage.startsWith("http")
               ? club.coverImage
-              : `http://localhost:5000${club.coverImage}`
+              : `${API_BASE}${club.coverImage}`
             : "";
 
           return {

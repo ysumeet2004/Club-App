@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const Announcement = require('../models/Announcement');
+const authMiddleware = require('../middlewares/Auth');
 
-// Create a new announcement
-router.post('/', async (req, res) => {
+// Create a new announcement (auth required)
+router.post('/', authMiddleware, async (req, res) => {
   try {
     const { club, event, title, message, type } = req.body;
 
@@ -34,8 +35,8 @@ router.get('/:eventId', async (req, res) => {
   }
 });
 
-// Update an announcement by ID
-router.put('/:id', async (req, res) => {
+// Update an announcement by ID (auth required)
+router.put('/:id', authMiddleware, async (req, res) => {
   try {
     const announcementId = req.params.id;
     const updateData = req.body;
@@ -52,8 +53,8 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-// Delete an announcement by ID
-router.delete('/:id', async (req, res) => {
+// Delete an announcement by ID (auth required)
+router.delete('/:id', authMiddleware, async (req, res) => {
   try {
     const announcementId = req.params.id;
 

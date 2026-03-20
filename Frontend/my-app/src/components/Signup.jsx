@@ -5,6 +5,7 @@ import { BsFillImageFill, BsInstagram, BsFacebook, BsGlobe2 } from 'react-icons/
 import './Signup.css';
 import signupIllustration from '../assets/6426047.jpg';
 import { Link } from 'react-router-dom';
+const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 function Signup() {
   const [formData, setFormData] = useState({
@@ -38,7 +39,7 @@ function Signup() {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:5000/Signup", {
+      const response = await fetch(`${API_BASE}/Signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),

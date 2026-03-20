@@ -4,7 +4,7 @@ import FormEditor from "./FormEditor";
 import axios from "axios";
 
 const TALLY_BASE = "https://api.tally.so";
-const BACKEND_BASE = "http://localhost:5000";
+const BACKEND_BASE = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 export default function FormManager({ eventId: propEventId }) {
   const location = useLocation();
