@@ -7,6 +7,7 @@ const path = require("path");
 const Event = require('../models/Event');
 const Round = require('../models/Round');
 const RoundParticipant = require('../models/RoundParticipant');
+const authMiddleware = require('../middlewares/Auth');
 
 // GET /events/manage/:id
 router__.get('/:id', async (req, res) => {
@@ -33,8 +34,8 @@ router__.get('/:id/rounds', async (req, res) => {
   }
 });
 
-// PUT /events/manage/:id
-router__.put('/:id', async (req, res) => {
+// PUT /events/manage/:id (auth required)
+router__.put('/:id', authMiddleware, async (req, res) => {
   try {
     const updatedEvent = await Event.findByIdAndUpdate(
       req.params.id,
@@ -49,8 +50,8 @@ router__.put('/:id', async (req, res) => {
   }
 });
 
-// POST /event/manage/:eventId/add-solo-participant
-router__.post('/:eventId/add-solo-participant', async (req, res) => {
+// POST /event/manage/:eventId/add-solo-participant (auth required)
+router__.post('/:eventId/add-solo-participant', authMiddleware, async (req, res) => {
   const { eventId } = req.params;
   const { userId } = req.body;
 
@@ -61,17 +62,12 @@ router__.post('/:eventId/add-solo-participant', async (req, res) => {
   try {
     const event = await Event.findById(eventId);
     if (!event) return res.status(404).json({ error: 'Event not found' });
-    console.log('event found');
 
     // Check if userId is already in soloParticipants
     const isAlreadyParticipant = event.soloParticipants.some(id => id.equals(userId));
-    //console.log(userId);
-    //console.log('step2')
     if (!isAlreadyParticipant) {
-      //console.log('step3');
       event.soloParticipants.push(userId);
       await event.save();
-      //console.log('step4');
     }
 
     res.json({ message: 'User added as solo participant', soloParticipants: event.soloParticipants });
@@ -84,11 +80,9 @@ router__.post('/:eventId/add-solo-participant', async (req, res) => {
 // GET /rounds/:roundId/participants
 router__.get('/rounds/:roundId/participants', async (req, res) => {
   try {
-    //console.log('pahucha');
     const participants = await RoundParticipant.find({ round: req.params.roundId })
       .populate('user')
       .populate({ path: 'team', populate: { path: 'members' } });
-      console.log(participants);
     res.json(participants);
   } catch (error) {
     console.error("Error fetching participants:", error);
@@ -96,8 +90,8 @@ router__.get('/rounds/:roundId/participants', async (req, res) => {
   }
 });
 
-// POST /rounds/:roundId/participants
-router__.post('/rounds/:roundId/participants', async (req, res) => {
+// POST /rounds/:roundId/participants (auth required)
+router__.post('/rounds/:roundId/participants', authMiddleware, async (req, res) => {
   try {
     const roundId = req.params.roundId;
     const { userData, userId, teamId, status = 'registered', progress = 'in_progress' } = req.body;
@@ -131,9 +125,8 @@ router__.post('/rounds/:roundId/participants', async (req, res) => {
   }
 });
 
-// POST /rounds/:roundId/move
-// POST /rounds/:roundId/move
-router__.post('/rounds/:roundId/move', async (req, res) => {
+// POST /rounds/:roundId/move (auth required)
+router__.post('/rounds/:roundId/move', authMiddleware, async (req, res) => {
   try {
     const { participantId, nextRoundId } = req.body;
 
@@ -209,20 +202,31 @@ router__.get('/:id/export', async (req, res) => {
 
 
 // Configure Multer storage
+const ALLOWED_MIME_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif"];
+const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 MB
+
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null,path.join(__dirname, '../../uploads'));
+    cb(null, path.join(__dirname, '../../uploads'));
   },
   filename: (req, file, cb) => {
-    // Unique filename: timestamp + original name
     cb(null, Date.now() + "-" + file.originalname);
   },
 });
 
-const upload = multer({ storage });
+const upload = multer({
+  storage,
+  limits: { fileSize: MAX_FILE_SIZE },
+  fileFilter: (req, file, cb) => {
+    if (!ALLOWED_MIME_TYPES.includes(file.mimetype)) {
+      return cb(new Error("Invalid file type. Only JPEG, PNG, WebP, and GIF images are allowed."));
+    }
+    cb(null, true);
+  },
+});
 
-// Image upload route
-router__.post("/:id/upload-image", upload.single("coverImage"), async (req, res) => {
+// Image upload route (auth required)
+router__.post("/:id/upload-image", authMiddleware, upload.single("coverImage"), async (req, res) => {
   try {
     if (!req.file) return res.status(400).json({ error: "No file uploaded" });
 

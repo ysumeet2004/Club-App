@@ -9,13 +9,13 @@ async function loginHandler(req, res) {
     // check if user exists
     const userToBeLoggedIn = await User.findOne({ email: email });
     if (!userToBeLoggedIn) {
-      return res.status(404).json({ message: "No account found" });
+      return res.status(401).json({ message: "Invalid credentials" });
     }
 
     // verify password
     const isMatch = await bcrypt.compare(password, userToBeLoggedIn.password);
     if (!isMatch) {
-      return res.status(401).json({ message: "Incorrect password" });
+      return res.status(401).json({ message: "Invalid credentials" });
     }
     // generate JWT
     const token = JWT.sign(
